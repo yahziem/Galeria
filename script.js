@@ -2,39 +2,45 @@ const slides = document.querySelectorAll('.slide');
 const phrases = document.querySelectorAll('.phrase-screen');
 let currentIndex = 0;
 let isShowingImage = true;
+let intervalId; // Variable para almacenar el intervalo
 
 window.addEventListener('DOMContentLoaded', () => {
   const music = document.getElementById('backgroundMusic');
+  const playButton = document.getElementById('playButton');
+
+  // Asegúrate de que todo esté oculto inicialmente
+  slides.forEach(slide => slide.style.display = 'none');
+  phrases.forEach(phrase => phrase.style.display = 'none');
   
-  // Forzar la reproducción automática al cargar la página
+  // Función para iniciar la presentación
+  const startPresentation = () => {
+    playMusic(); // Inicia la música
+    playButton.style.display = 'none'; // Ocultar el botón
+    showSlide(currentIndex); // Mostrar la primera diapositiva
+    intervalId = setInterval(nextSlide, 5000); // Iniciar el cambio automático
+  };
+
+  // Función para reproducir la música
   const playMusic = () => {
+    music.muted = false;
     music.play().catch(() => {
       console.log('El navegador bloqueó la reproducción automática.');
     });
   };
 
-  // Intentar reproducir el audio al hacer clic en cualquier parte de la página
-  document.body.addEventListener('click', () => {
-    music.muted = false;
-    playMusic();
-  });
-
-  // Desactivar el silencio después de un breve retraso
-  setTimeout(() => {
-    music.muted = false;
-    playMusic();
-  }, 1000); // 1 segundo de retraso
+  // Asignar evento al botón
+  playButton.addEventListener('click', startPresentation);
 });
 
 // Función para mostrar la diapositiva activa
 function showSlide(index) {
-  slides.forEach((slide, i) => slide.classList.remove('active'));
-  phrases.forEach((phrase, i) => phrase.classList.remove('active'));
+  slides.forEach((slide, i) => slide.style.display = 'none');
+  phrases.forEach((phrase, i) => phrase.style.display = 'none');
 
   if (isShowingImage) {
-    slides[index].classList.add('active');
+    slides[index].style.display = 'flex'; // Mostrar imagen
   } else {
-    phrases[index].classList.add('active');
+    phrases[index].style.display = 'flex'; // Mostrar frase
   }
 }
 
@@ -46,7 +52,3 @@ function nextSlide() {
   isShowingImage = !isShowingImage; // Alternar entre imagen y frase
   showSlide(currentIndex);
 }
-
-// Inicia el intervalo de cambio cada 5 segundos
-setInterval(nextSlide, 5000);
-  
