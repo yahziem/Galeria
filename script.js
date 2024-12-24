@@ -49,7 +49,7 @@ function nextSlide() {
   if (isShowingImage) {
     // Cambiar a frase después de 5 segundos
     clearInterval(intervalId);
-    intervalId = setInterval(nextSlide, 12000); // Cambiar a texto después de 14 segundos
+    intervalId = setInterval(nextSlide, 15000); // Cambiar a texto después de 14 segundos
   } else {
     // Cambiar a imagen después de 14 segundos
     clearInterval(intervalId);
