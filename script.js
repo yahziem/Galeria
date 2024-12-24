@@ -2,7 +2,7 @@ const slides = document.querySelectorAll('.slide');
 const phrases = document.querySelectorAll('.phrase-screen');
 let currentIndex = 0;
 let isShowingImage = true;
-let intervalId; // Variable para almacenar el intervalo
+let intervalId;
 
 window.addEventListener('DOMContentLoaded', () => {
   const music = document.getElementById('backgroundMusic');
@@ -17,7 +17,7 @@ window.addEventListener('DOMContentLoaded', () => {
     playMusic(); // Inicia la música
     playButton.style.display = 'none'; // Ocultar el botón
     showSlide(currentIndex); // Mostrar la primera diapositiva
-    intervalId = setInterval(nextSlide, 5000); // Iniciar el cambio automático
+    intervalId = setInterval(nextSlide, 5000); // Iniciar el cambio automático para imágenes
   };
 
   // Función para reproducir la música
@@ -46,7 +46,14 @@ function showSlide(index) {
 
 // Función para cambiar entre imagen y frase
 function nextSlide() {
-  if (!isShowingImage) {
+  if (isShowingImage) {
+    // Cambiar a frase después de 5 segundos
+    clearInterval(intervalId);
+    intervalId = setInterval(nextSlide, 14000); // Cambiar a texto después de 14 segundos
+  } else {
+    // Cambiar a imagen después de 14 segundos
+    clearInterval(intervalId);
+    intervalId = setInterval(nextSlide, 3000); // Cambiar a imagen después de 5 segundos
     currentIndex = (currentIndex + 1) % slides.length;
   }
   isShowingImage = !isShowingImage; // Alternar entre imagen y frase
