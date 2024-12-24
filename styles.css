@@ -44,10 +44,11 @@ body {
   }
   
   .phrase-screen p {
-    margin: 10px 0;
-    font-size: 2rem;
+    margin: 5px 0;
+    font-size: 1.5rem; /* Cambiar de 2rem a 1.8rem para hacerlo un poco más pequeño */
     color: #fff;
-  }
+}
+
   
   /* Estilos para el botón */
   #playButton {
